@@ -1,0 +1,19 @@
+{
+    "name": "andrewhoule/silverstripe-basiccalendar",
+    "description": "Basic calendar page to show a listing of upcoming events",
+    "type": "silverstripe-module",
+    "keywords": ["silverstripe", "calendar", "events"],
+    "license": "BSD-3-Clause",
+    "authors": [{
+        "name": "Andrew Houle",
+        "homepage": "http://andyhoule.com",
+        "role": "Developer"
+    }],
+    "require": {
+        "silverstripe/cms": "3.1.*",
+        "silverstripe/framework": "3.1.*"
+    },
+    "extra": {
+        "installer-name": "basicevents"
+    }
+}
