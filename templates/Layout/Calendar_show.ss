@@ -1,15 +1,17 @@
 <% loop CalendarEntry %>
 	<div class="calendar-event">
-		<h1 class="page-name">$Title</h1>
+		<h2 class="calendar-event-title">$Title</h1>
 		<% if PhotoSized %>
 			<img src="$PhotoSized(300).URL" alt="title" class="event-img-full">
 		<% end_if %>
 		<dl class="calendar-event-details">
-			<span class="calendar-event-detail dates">
-				<dt>Date:</dt>
-				<dd>$NiceDates</dd>
-			</span><!-- calendar-event-detail dates -->
-			<% if NiceDates %>
+			<% if NiceTimes %>
+				<span class="calendar-event-detail dates">
+					<dt>Date:</dt>
+					<dd>$NiceDates</dd>
+				</span><!-- calendar-event-detail dates -->
+			<% end_if %>
+			<% if NiceTimes %>
 				<span class="calendar-event-detail times">
 					<dt>Time:</dt>
 					<dd>$NiceTimes</dd>
