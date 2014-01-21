@@ -5,7 +5,7 @@
 			<img src="$PhotoSized(300).URL" alt="title" class="event-img-full">
 		<% end_if %>
 		<dl class="calendar-event-details">
-			<% if NiceTimes %>
+			<% if NiceDates %>
 				<span class="calendar-event-detail dates">
 					<dt>Date:</dt>
 					<dd>$NiceDates</dd>
