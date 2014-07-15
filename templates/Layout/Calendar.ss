@@ -4,9 +4,15 @@
         <ul class="upcoming-events">
             <% loop PaginatedUpcomingEvents %>
                 <li class="upcoming-event">
-                    <% if PhotoCropped %><img src="$PhotoCropped(70,70).URL" alt="$Title" class="event-img-thumb"><% end_if %>
-                    <span class="dates">$NiceDates</span>
-                    <span class="title"><a href="$Link">$Title</a></span>
+                    <% if PhotoCropped %>
+                        <div class="event-thumb">
+                          <img src="$PhotoCropped(70,70).URL" alt="$Title" class="event-img-thumb">  
+                        </div><!-- .event-thumb -->
+                    <% end_if %>
+                    <div class="event-info">
+                        <span class="dates">$NiceDates</span>
+                        <span class="title"><a href="$Link">$Title</a></span>
+                    </div><!-- .event-info -->
                 </li><!-- upcoming-event -->
             <% end_loop %>
         </ul><!-- upcoming-events -->
