@@ -2,7 +2,7 @@
 	<div class="calendar-event">
 		<h2 class="calendar-event-title">$Title</h1>
 		<% if PhotoSized %>
-			<img src="$PhotoSized(300).URL" alt="title" class="event-img-full">
+			<img src="$PhotoSized.URL" alt="title" class="event-img-full">
 		<% end_if %>
 		<dl class="calendar-event-details">
 			<% if NiceDates %>
