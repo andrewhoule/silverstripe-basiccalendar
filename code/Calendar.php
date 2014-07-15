@@ -56,7 +56,7 @@ class Calendar extends Page {
   public function getUpcomingEvents() {
     $calendarentries = $this->getComponents("CalendarEntries")->sort("StartDate","ASC");
     $calendarentrylist = new ArrayList();
-    if($calendarentries->exists()) {
+    if($calendarentries) {
       foreach($calendarentries AS $calendarenty) {
         if($calendarenty->EndDate) {
           if(strtotime($calendarenty->EndDate) >= strtotime("now")) {
