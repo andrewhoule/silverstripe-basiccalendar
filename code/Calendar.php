@@ -2,31 +2,35 @@
  
 class Calendar extends Page {
 
-	private static $has_many = array(
-        'CalendarEntries' => 'CalendarEntry'
-    );
+  private static $has_many = array(
+    'CalendarEntries' => 'CalendarEntry'
+  );
 
-	private static $icon = "basiccalendar/images/calendar";
+  public function singular_name() {
+    return "Event Listing Page";
+  }
 
-	public function getCMSFields() {
-		$fields = parent::getCMSFields();
-		$CalendarGridField = new GridField(
-            'CalendarEntries',
-            'Calendar Entry',
-            $this->CalendarEntries(),
-            GridFieldConfig::create()
-                ->addComponent(new GridFieldToolbarHeader())
-                ->addComponent(new GridFieldAddNewButton('toolbar-header-right'))
-                ->addComponent(new GridFieldSortableHeader())
-                ->addComponent(new GridFieldDataColumns())
-                ->addComponent(new GridFieldPaginator(50))
-                ->addComponent(new GridFieldEditButton())
-                ->addComponent(new GridFieldDeleteAction())
-                ->addComponent(new GridFieldDetailForm())
-        );
-        $fields->addFieldToTab("Root.Events", $CalendarGridField);
-		return $fields;
-	}
+  private static $icon = "basiccalendar/images/calendar";
+
+  public function getCMSFields() {
+    $fields = parent::getCMSFields();
+    $CalendarGridField = new GridField(
+      'CalendarEntries',
+      'Events',
+      $this->CalendarEntries(),
+      GridFieldConfig::create()
+        ->addComponent(new GridFieldToolbarHeader())
+        ->addComponent(new GridFieldAddNewButton('toolbar-header-right'))
+        ->addComponent(new GridFieldSortableHeader())
+        ->addComponent(new GridFieldDataColumns())
+        ->addComponent(new GridFieldPaginator(50))
+        ->addComponent(new GridFieldEditButton())
+        ->addComponent(new GridFieldDeleteAction())
+        ->addComponent(new GridFieldDetailForm())
+      );
+    $fields->addFieldToTab("Root.Events", $CalendarGridField);
+    return $fields;
+  }
 
     public function getUpcomingEvents() {
         $calendarentries = $this->getComponents("CalendarEntries")->sort("StartDate","ASC");
@@ -54,18 +58,18 @@ class Calendar extends Page {
  
 class Calendar_Controller extends Page_Controller {
 
-	private static $allowed_actions = array(
-    	'show'
-   	);
+  private static $allowed_actions = array(
+      'show'
+    );
 
-   	public function getCalendarEntry() {
-		$Params = $this->getURLParams();
-		if(is_numeric($Params['ID']) && $CalendarEntry = CalendarEntry::get()->byID((int)$Params['ID'])) {
-			return $CalendarEntry;
-		}
-	}
+    public function getCalendarEntry() {
+    $Params = $this->getURLParams();
+    if(is_numeric($Params['ID']) && $CalendarEntry = CalendarEntry::get()->byID((int)$Params['ID'])) {
+      return $CalendarEntry;
+    }
+  }
 
-   	public function show() {       
+    public function show() {       
       if($CalendarEntry = $this->getCalendarEntry()) {
          $Data = array(
             'CalendarEntry' => $CalendarEntry
@@ -77,17 +81,17 @@ class Calendar_Controller extends Page_Controller {
       }
    }
 
-	public function init() {
-    	parent::init();
-      	Requirements::CSS("basiccalendar/css/calendar.css");
-   	}
+  public function init() {
+      parent::init();
+        Requirements::CSS("basiccalendar/css/calendar.css");
+    }
 
-   	public function PaginatedUpcomingEvents() {
-	  	$PaginatedUpcomingEvents = new PaginatedList($this->getUpcomingEvents(), $this->request);
-	  	$PaginatedUpcomingEvents->setPageLength('15');
-	  	return $PaginatedUpcomingEvents;
-	}
-	
+    public function PaginatedUpcomingEvents() {
+      $PaginatedUpcomingEvents = new PaginatedList($this->getUpcomingEvents(), $this->request);
+      $PaginatedUpcomingEvents->setPageLength('15');
+      return $PaginatedUpcomingEvents;
+  }
+  
 }
 
 ?>
