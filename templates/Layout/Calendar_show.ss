@@ -34,5 +34,5 @@
 			<p>$Content</p>
 		<% end_if %>
 	</div><!-- calendar-event -->
-	<p><a href="$CalendarLink" class="button">&larr; Back to the Calendar</a></p>
+	<p><a href="$CalendarLink" class="back-to-events button">&larr; Back to the Calendar</a></p>
 <% end_loop %>
