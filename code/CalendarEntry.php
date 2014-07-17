@@ -9,7 +9,7 @@ class CalendarEntry extends DataObject {
     'EndTime' => 'Time',
     'Title' => 'Varchar(255)',
     'Location' => 'Text',
-    'Content' => 'Text',
+    'Content' => 'HTMLText',
   );
 
   private static $has_one = array(
@@ -56,7 +56,7 @@ class CalendarEntry extends DataObject {
       TextField::create("Location"),
       $imagefield,
       $resourcefield,
-      TextareaField::create("Content")->setTitle("Event Description")
+      HTMLEditorField::create("Content")->setTitle("Event Description")
     );
   }
 
