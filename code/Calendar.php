@@ -57,14 +57,14 @@ class Calendar extends Page {
     $calendarentries = $this->getComponents("CalendarEntries")->sort("StartDate","ASC");
     $calendarentrylist = new ArrayList();
     if($calendarentries) {
-      foreach($calendarentries AS $calendarenty) {
-        if($calendarenty->EndDate) {
-          if(strtotime($calendarenty->EndDate) >= strtotime("now")) {
-            $calendarentrylist->push($calendarenty);
+      foreach($calendarentries AS $calendarentry) {
+        if($calendarentry->EndDate) {
+          if(strtotime($calendarentry->EndDate) > strtotime("yesterday")) {
+            $calendarentrylist->push($calendarentry);
           }
         }
-        elseif(strtotime($calendarenty->StartDate) >= strtotime("now")) {
-          $calendarentrylist->push($calendarenty);
+        elseif(strtotime($calendarentry->StartDate) > strtotime("yesterday")) {
+          $calendarentrylist->push($calendarentry);
         }
       }
       return $calendarentrylist;
