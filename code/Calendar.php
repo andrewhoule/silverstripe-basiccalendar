@@ -7,7 +7,8 @@ class Calendar extends Page {
     'PhotoThumbnailHeight' => 'Int',
     'PhotoThumbnailWidth' => 'Int',
     'PhotoFullHeight' => 'Int',
-    'PhotoFullWidth' => 'Int'
+    'PhotoFullWidth' => 'Int',
+    'ShowExcerpt' => 'Boolean'
   );
 
   private static $has_many = array(
@@ -23,7 +24,8 @@ class Calendar extends Page {
     'PhotoThumbnailWidth' => '150',
     'PhotoThumbnailHeight' => '150',
     'PhotoFullWidth' => '700',
-    'PhotoFullHeight' => '700'
+    'PhotoFullHeight' => '700',
+    'ShowExcerpt' => true
   );
 
   private static $icon = "basiccalendar/images/calendar";
@@ -45,6 +47,7 @@ class Calendar extends Page {
         ->addComponent(new GridFieldDetailForm())
       );
     $fields->addFieldToTab("Root.Events", $CalendarGridField);
+    $fields->addFieldToTab("Root.Config", CheckboxField::create("ShowExcerpt")->setTitle("Show Excerpts on Holder Page"));
     $fields->addFieldToTab("Root.Config", SliderField::create("EventsPerPage","Number of Events Per Page",1,50));
     $fields->addFieldToTab("Root.Config", SliderField::create("PhotoThumbnailWidth","Photo Thumbnail Width",50,400));
     $fields->addFieldToTab("Root.Config", SliderField::create("PhotoThumbnailHeight","Photo Thumbnail Height",50,400));
