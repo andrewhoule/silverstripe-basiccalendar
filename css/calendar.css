@@ -1,55 +1,55 @@
-.upcoming-events-wrap ul.upcoming-events {
+.upcoming-events {
 	margin: 0;
 	padding: 0;
 }
-.upcoming-events-wrap ul.upcoming-events li {
+.upcoming-events li {
 	border-bottom: 1px solid #ddd;
 	list-style: none;
 	margin: 0 0 20px 0;
 	padding: 0 0 20px 0;
 	overflow: hidden;
 }
-.upcoming-events-wrap ul.upcoming-events li:first-child {
+.upcoming-events li:first-child {
 	border-top: 1px solid #ddd;
 	padding-top: 25px;
 }
-.upcoming-events-wrap ul.upcoming-events li:last-child {
+.upcoming-events li:last-child {
 	margin: 0;
 }
-.upcoming-events-wrap .upcoming-events .dates {
+.upcoming-events .dates {
 	display: block;
 	color: #888;
 	margin-bottom: 3px;
 }
-.upcoming-events-wrap .upcoming-events .title {
+.upcoming-events .title {
 	display: block;
 	font-weight: 700;
 	font-size: 21px;
 	line-height: 28px;
 }
-.upcoming-events-wrap .calendar-event-details {
+.calendar-event-details {
 	margin: 0 0 20px 0;
 	padding: 0;
 }
-.upcoming-events-wrap .calendar-event-detail {
+.calendar-event-detail {
 	display: block;
 	overflow: hidden;
 	margin: 0 0 5px 0;
 }
-.upcoming-events-wrap .calendar-event-detail dt {
+.calendar-event-detail dt {
 	color: #161616;
 	float: left;
 	font-weight: 700;
 	width: 120px;
 }
-.upcoming-events-wrap .calendar-event-detail dd {
+.calendar-event-detail dd {
 	margin-left: 140px;
 }
-.upcoming-events-wrap .event-img-thumb {
+.event-img-thumb {
 	float: left;
 	margin: 0 20px 0 0;
 }
-.upcoming-events-wrap .event-img-full {
+.event-img-full {
 	float: right;
 	margin: 0 0 0 20px;
 }
