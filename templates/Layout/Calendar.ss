@@ -21,6 +21,8 @@
             <% end_loop %>
         </ul><!-- upcoming-events -->
     </div><!-- upcoming events-wrap -->
+<% else %>
+    <p class="no-events">There are no upcoming events at the moment. Please check back soon.</p><!-- .no-events -->
 <% end_if %>
 <% if $PaginatedUpcomingEvents.MoreThanOnePage %>
     <div class="pagination-wrap cf">
