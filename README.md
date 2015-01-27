@@ -6,7 +6,8 @@ Basic Events Module
 * http://andyhoule.com
 
 ## Requirements
-* SilverStripe minimum version 3.1+.
+* SilverStripe minimum version 3+.
+* Slider Field Module (https://github.com/tractorcow/silverstripe-sliderfield)
 
 ## Installation
 Via Composer run "composer require andrewhoule/silverstripe-basiccalendar dev-master" then go to http://yoursite.com/dev/build/?flush=1 or the following...
