@@ -6,7 +6,7 @@ Basic Events Module
 * http://andyhoule.com
 
 ## Requirements
-* SilverStripe minimum version 3+.
+* SilverStripe minimum version 3.1+.
 * Slider Field Module (https://github.com/tractorcow/silverstripe-sliderfield)
 
 ## Installation
