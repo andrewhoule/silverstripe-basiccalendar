@@ -83,7 +83,10 @@ class CalendarEntry extends DataObject {
 
   public function NiceDates() {
     if($this->StartDate AND $this->EndDate)
-      return $this->NiceStartDate() . " – " . $this->NiceEndDate();
+      if($this->StartDate == $this->EndDate)
+        return $this->NiceStartDate();
+      else
+        return $this->NiceStartDate() . " – " . $this->NiceEndDate();
     elseif($this->StartDate)
       return $this->NiceStartDate();
     else
