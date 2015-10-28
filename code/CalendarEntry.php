@@ -9,7 +9,7 @@ class CalendarEntry extends DataObject {
     'EndTime' => 'Time',
     'Title' => 'Varchar(255)',
     'Location' => 'Text',
-    'Content' => 'HTMLText',
+    'Content' => 'HTMLText'
   );
 
   private static $has_one = array(
@@ -48,15 +48,15 @@ class CalendarEntry extends DataObject {
     $resourcefield->folderName = "Calendar"; 
     $resourcefield->getValidator()->allowedExtensions = array("pdf","doc","docx");
     return new FieldList(
-      TextField::create("Title"),
+      TextField::create('Title'),
       $startdatefield,
       $enddatefield,
-      TimeField::create("StartTime")->setTitle("Start Time"),
-      TimeField::create("EndTime")->setTitle("End Time"),
-      TextField::create("Location"),
+      TimeField::create('StartTime')->setTitle('Start Time'),
+      TimeField::create('EndTime')->setTitle('End Time'),
+      TextField::create('Location'),
       $imagefield,
       $resourcefield,
-      HTMLEditorField::create("Content")->setTitle("Event Description")
+      HTMLEditorField::create('Content')->setTitle('Event Description')
     );
   }
 
