@@ -6,7 +6,7 @@
         <li class="upcoming-event">
           <% if $PhotoCropped %>
             <div class="event-thumb">
-              <img src="$PhotoCropped.URL" alt="$Title" class="event-img-thumb">  
+              <img src="$PhotoCropped.URL" alt="$Title" class="event-img-thumb">
             </div><!-- .event-thumb -->
           <% end_if %>
           <div class="event-info">
