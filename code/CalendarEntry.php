@@ -1,29 +1,30 @@
 <?php
 
 class CalendarEntry extends DataObject
+
 {
-    private static $db = array(
-    'StartDate' => 'Date',
-    'EndDate' => 'Date',
-    'StartTime' => 'Time',
-    'EndTime' => 'Time',
-    'Title' => 'Varchar(255)',
-    'Location' => 'Text',
-    'Content' => 'HTMLText',
-  );
+    private static $db = array (
+        'StartDate' => 'Date',
+        'EndDate' => 'Date',
+        'StartTime' => 'Time',
+        'EndTime' => 'Time',
+        'Title' => 'Varchar(255)',
+        'Location' => 'Text',
+        'Content' => 'HTMLText',
+    );
 
-    private static $has_one = array(
-    'Resource' => 'File',
-    'Photo' => 'Image',
-    'Calendar' => 'Calendar',
-  );
+    private static $has_one = array (
+        'Resource' => 'File',
+        'Photo' => 'Image',
+        'Calendar' => 'Calendar',
+    );
 
-    private static $summary_fields = array(
-    'Thumbnail' => 'Photo',
-    'NiceDates' => 'Date',
-    'Title' => 'Title',
-    'ContentExcerpt' => 'Content',
-  );
+    private static $summary_fields = array (
+        'Thumbnail' => 'Photo',
+        'StartDate' => 'Start Date',
+        'EndDate' => 'End Date',
+        'Title' => 'Title'
+    );
 
     public function singular_name()
     {
@@ -34,14 +35,17 @@ class CalendarEntry extends DataObject
     {
         return true;
     }
+
     public function canEdit($Member = null)
     {
         return true;
     }
+
     public function canView($Member = null)
     {
         return true;
     }
+
     public function canDelete($Member = null)
     {
         return true;
@@ -49,35 +53,55 @@ class CalendarEntry extends DataObject
 
     public function getCMSFields()
     {
-        $startdatefield = new DateField('StartDate', 'Start Date');
-        $startdatefield->setConfig('showcalendar', true);
-        $startdatefield->setConfig('dateformat', 'MM/dd/yyyy');
-        $enddatefield = new DateField('EndDate', 'End Date');
-        $enddatefield->setConfig('showcalendar', true);
-        $enddatefield->setConfig('dateformat', 'MM/dd/yyyy');
-        $imagefield = UploadField::create('Photo');
-        $imagefield->folderName = 'Calendar';
-        $imagefield->getValidator()->allowedExtensions = array('jpg', 'jpeg', 'gif', 'png');
-        $resourcefield = UploadField::create('Resource')->setTitle('Flyer/Brochure (PDF or Doc)');
-        $resourcefield->folderName = 'Calendar';
-        $resourcefield->getValidator()->allowedExtensions = array('pdf', 'doc', 'docx');
-
+        $imageField = UploadField::create('Photo')
+            ->setDescription('jpg, gif and png filetypes allowed. Max file size of 2MB')
+            ->setFolderName('Calendar')
+            ->setAllowedExtensions(array (
+                'jpg',
+                'jpeg',
+                'png',
+                'gif'
+            ));
+        $imageField
+            ->getValidator()->setAllowedMaxFileSize(2097152);
+        $resourceField = UploadField::create('Photo')
+            ->setDescription('Flyer/Brochure (PDF or Doc). Max file size of 2MB')
+            ->setFolderName('Calendar')
+            ->setAllowedExtensions(array (
+                'pdf',
+                'doc',
+                'docx'
+            ));
+        $resourceField
+            ->getValidator()->setAllowedMaxFileSize(2097152);
         return new FieldList(
-      TextField::create('Title'),
-      $startdatefield,
-      $enddatefield,
-      TimeField::create('StartTime')->setTitle('Start Time'),
-      TimeField::create('EndTime')->setTitle('End Time'),
-      TextField::create('Location'),
-      $imagefield,
-      $resourcefield,
-      HTMLEditorField::create('Content')->setTitle('Event Description')
-    );
+            TextField::create('Title'),
+            DateField::create('StartDate')
+                ->setTitle('Start Date')
+                ->setConfig('showcalendar', true)
+                ->setConfig('dateformat', 'MM/dd/yyyy'),
+            DateField::create('EndDate')
+                ->setTitle('End Date')
+                ->setConfig('showcalendar', true)
+                ->setConfig('dateformat', 'MM/dd/yyyy'),
+            TimeField::create('StartTime')
+                ->setTitle('Start Time'),
+            TimeField::create('EndTime')
+                ->setTitle('End Time'),
+            TextField::create('Location'),
+            $imageField,
+            $resourceField,
+            HTMLEditorField::create('Content')
+                ->setTitle('Event Description')
+        );
     }
 
     public function Link()
     {
-        return $this->Calendar()->Link('show').'/'.$this->ID;
+        return Controller::join_links(
+            $this->Calendar()->Link('show'),
+            $this->ID
+        );
     }
 
     public function ContentExcerpt($length = 200)
@@ -87,18 +111,19 @@ class CalendarEntry extends DataObject
         if (strlen($text) > $length) {
             $text = preg_replace("/^(.{1,$length})(\s.*|$)/s", '\\1...', $text);
         }
-
         return $text;
     }
 
     public function NiceStartDate()
     {
-        return $this->obj('StartDate')->Format('F j, Y');
+        return $this->obj('StartDate')
+            ->Format('F j, Y');
     }
 
     public function NiceEndDate()
     {
-        return $this->obj('EndDate')->Format('F j, Y');
+        return $this->obj('EndDate')
+            ->Format('F j, Y');
     }
 
     public function NiceDates()
@@ -152,7 +177,6 @@ class CalendarEntry extends DataObject
         if ($height != 0) {
             $y = $height;
         }
-
         return $this->Photo()->CroppedImage($x, $y);
     }
 
@@ -166,7 +190,6 @@ class CalendarEntry extends DataObject
         if ($height != 0) {
             $y = $height;
         }
-
         return $this->Photo()->SetRatioSize($x, $y);
     }
 
@@ -179,4 +202,5 @@ class CalendarEntry extends DataObject
             return;
         }
     }
+
 }

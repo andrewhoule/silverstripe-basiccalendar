@@ -1,62 +1,57 @@
 <?php
 
-
 class Calendar extends Page
-{
-    private static $db = array(
-    'EventsPerPage' => 'Int',
-    'PhotoThumbnailHeight' => 'Int',
-    'PhotoThumbnailWidth' => 'Int',
-    'PhotoFullHeight' => 'Int',
-    'PhotoFullWidth' => 'Int',
-    'ShowExcerpt' => 'Boolean',
-  );
 
-    private static $has_many = array(
-    'CalendarEntries' => 'CalendarEntry',
-  );
+{
+    private static $db = array (
+        'EventsPerPage' => 'Int',
+        'PhotoThumbnailHeight' => 'Int',
+        'PhotoThumbnailWidth' => 'Int',
+        'PhotoFullHeight' => 'Int',
+        'PhotoFullWidth' => 'Int',
+        'ShowExcerpt' => 'Boolean',
+    );
+
+    private static $has_many = array (
+        'CalendarEntries' => 'CalendarEntry',
+    );
 
     public function singular_name()
     {
         return 'Event Listing Page';
     }
 
-    private static $defaults = array(
-    'EventsPerPage' => '20',
-    'PhotoThumbnailWidth' => '150',
-    'PhotoThumbnailHeight' => '150',
-    'PhotoFullWidth' => '700',
-    'PhotoFullHeight' => '700',
-    'ShowExcerpt' => true,
-  );
+    private static $defaults = array (
+        'EventsPerPage' => '20',
+        'PhotoThumbnailWidth' => '150',
+        'PhotoThumbnailHeight' => '150',
+        'PhotoFullWidth' => '700',
+        'PhotoFullHeight' => '700',
+        'ShowExcerpt' => true,
+    );
 
     private static $icon = 'basiccalendar/images/calendar';
 
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
-        $CalendarGridField = new GridField(
-      'CalendarEntries',
-      'Events',
-      $this->CalendarEntries(),
-      GridFieldConfig::create()
-        ->addComponent(new GridFieldToolbarHeader())
-        ->addComponent(new GridFieldAddNewButton('toolbar-header-right'))
-        ->addComponent(new GridFieldSortableHeader())
-        ->addComponent(new GridFieldDataColumns())
-        ->addComponent(new GridFieldPaginator(50))
-        ->addComponent(new GridFieldEditButton())
-        ->addComponent(new GridFieldDeleteAction())
-        ->addComponent(new GridFieldDetailForm())
-      );
-        $fields->addFieldToTab('Root.Events', $CalendarGridField);
-        $fields->addFieldToTab('Root.Config', CheckboxField::create('ShowExcerpt')->setTitle('Show Excerpts on Holder Page'));
-        $fields->addFieldToTab('Root.Config', SliderField::create('EventsPerPage', 'Number of Events Per Page', 1, 50));
-        $fields->addFieldToTab('Root.Config', SliderField::create('PhotoThumbnailWidth', 'Photo Thumbnail Width', 50, 400));
-        $fields->addFieldToTab('Root.Config', SliderField::create('PhotoThumbnailHeight', 'Photo Thumbnail Height', 50, 400));
-        $fields->addFieldToTab('Root.Config', SliderField::create('PhotoFullWidth', 'Photo Fullsize Width', 400, 1200));
-        $fields->addFieldToTab('Root.Config', SliderField::create('PhotoFullHeight', 'Photo Fullsize Height', 400, 1200));
-
+        $fields->addFieldToTab('Root.Events',
+            GridField::create(
+                'CalendarEntries',
+                'Events',
+                $this->CalendarEntries(),
+                GridFieldConfig_RecordEditor::create(50)
+            )
+        );
+        $fields->addFieldsToTab('Root.Config', array(
+            CheckboxField::create('ShowExcerpt')
+                ->setTitle('Show Excerpts on Holder Page'),
+            SliderField::create('EventsPerPage', 'Number of Events Per Page', 1, 50),
+            SliderField::create('PhotoThumbnailWidth', 'Photo Thumbnail Width', 50, 400),
+            SliderField::create('PhotoThumbnailHeight', 'Photo Thumbnail Height', 50, 400),
+            SliderField::create('PhotoFullWidth', 'Photo Fullsize Width', 400, 1200),
+            SliderField::create('PhotoFullHeight', 'Photo Fullsize Height', 400, 1200)
+        ));
         return $fields;
     }
 
@@ -83,13 +78,16 @@ class Calendar extends Page
     {
         return $this->getUpcomingEvents()->limit($limit);
     }
+
 }
 
 class Calendar_Controller extends Page_Controller
+
 {
+
     private static $allowed_actions = array(
-    'show',
-  );
+        'show',
+    );
 
     public function getCalendarEntry()
     {
@@ -103,9 +101,8 @@ class Calendar_Controller extends Page_Controller
     {
         if ($CalendarEntry = $this->getCalendarEntry()) {
             $Data = array(
-        'CalendarEntry' => $CalendarEntry,
-      );
-
+                'CalendarEntry' => $CalendarEntry,
+            );
             return $this->Customise($Data);
         } else {
             return $this->httpError(404, 'Sorry that calendar entry could not be found');
@@ -122,7 +119,7 @@ class Calendar_Controller extends Page_Controller
     {
         $PaginatedUpcomingEvents = new PaginatedList($this->getUpcomingEvents(), $this->request);
         $PaginatedUpcomingEvents->setPageLength($this->EventsPerPage ? $this->EventsPerPage : '20');
-
         return $PaginatedUpcomingEvents;
     }
+
 }
