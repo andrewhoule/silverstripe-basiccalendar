@@ -64,7 +64,7 @@ class CalendarEntry extends DataObject
             ));
         $imageField
             ->getValidator()->setAllowedMaxFileSize(2097152);
-        $resourceField = UploadField::create('Photo')
+        $resourceField = UploadField::create('Resource')
             ->setDescription('Flyer/Brochure (PDF or Doc). Max file size of 2MB')
             ->setFolderName('Calendar')
             ->setAllowedExtensions(array (
