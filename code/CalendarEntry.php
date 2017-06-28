@@ -54,7 +54,7 @@ class CalendarEntry extends DataObject
     public function getCMSFields()
     {
         $imageField = UploadField::create('Photo')
-            ->setDescription('jpg, gif and png filetypes allowed. Max file size of 2MB')
+            ->setDescription('jpg, gif and png filetypes allowed. Max file size of 10MB')
             ->setFolderName('Calendar')
             ->setAllowedExtensions(array (
                 'jpg',
@@ -63,9 +63,9 @@ class CalendarEntry extends DataObject
                 'gif'
             ));
         $imageField
-            ->getValidator()->setAllowedMaxFileSize(2097152);
+            ->getValidator()->setAllowedMaxFileSize(10485760);
         $resourceField = UploadField::create('Resource')
-            ->setDescription('Flyer/Brochure (PDF or Doc). Max file size of 2MB')
+            ->setDescription('Flyer/Brochure (PDF or Doc). Max file size of 10MB')
             ->setFolderName('Calendar')
             ->setAllowedExtensions(array (
                 'pdf',
@@ -73,7 +73,7 @@ class CalendarEntry extends DataObject
                 'docx'
             ));
         $resourceField
-            ->getValidator()->setAllowedMaxFileSize(2097152);
+            ->getValidator()->setAllowedMaxFileSize(10485760);
         return new FieldList(
             TextField::create('Title'),
             DateField::create('StartDate')
