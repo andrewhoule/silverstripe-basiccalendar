@@ -52,30 +52,13 @@ class CalendarEntry extends DataObject
     }
 
     public function getCMSFields()
-    {
-        $imageField = UploadField::create('Photo')
-            ->setDescription('jpg, gif and png filetypes allowed. Max file size of 10MB')
-            ->setFolderName('Calendar')
-            ->setAllowedExtensions(array (
-                'jpg',
-                'jpeg',
-                'png',
-                'gif'
-            ));
-        $imageField
-            ->getValidator()->setAllowedMaxFileSize(10485760);
-        $resourceField = UploadField::create('Resource')
-            ->setDescription('Flyer/Brochure (PDF or Doc). Max file size of 10MB')
-            ->setFolderName('Calendar')
-            ->setAllowedExtensions(array (
-                'pdf',
-                'doc',
-                'docx'
-            ));
-        $resourceField
-            ->getValidator()->setAllowedMaxFileSize(10485760);
-        return new FieldList(
-            TextField::create('Title'),
+	{
+        $fields = parent::getCMSFields();
+
+        $fields->removeByName('CalendarID');
+
+    	$fields->addFieldsToTab('Root.Main', array(
+      	    TextField::create('Title'),
             DateField::create('StartDate')
                 ->setTitle('Start Date')
                 ->setConfig('showcalendar', true)
@@ -89,12 +72,30 @@ class CalendarEntry extends DataObject
             TimeField::create('EndTime')
                 ->setTitle('End Time'),
             TextField::create('Location'),
-            $imageField,
-            $resourceField,
+            UploadField::create('Photo')
+                ->setDescription('jpg, gif, or png filetypes allowed.')
+                ->setFolderName('Calendar')
+                ->setAllowedExtensions(array(
+                    'jpg',
+                    'jpeg',
+                    'png',
+                    'gif'
+                )),
+            UploadField::create('Resource')
+                ->setDescription('Flyer/Brochure (PDF or Doc). pdf, doc, or docx filetypes allowed.')
+                ->setFolderName('Calendar')
+                ->setAllowedExtensions(array(
+                    'pdf',
+                    'doc',
+                    'docx'
+                )),
             HTMLEditorField::create('Content')
                 ->setTitle('Event Description')
-        );
-    }
+         ));
+
+        $this->extend('updateCMSFields', $fields);
+    	return $fields;
+  	}
 
     public function Link()
     {
